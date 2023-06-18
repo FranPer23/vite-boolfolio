@@ -14,7 +14,9 @@ export default {
 
   computed: {
     contentPreview() {
-      if (this.project.title.length > 5) {
+      if (!this.project.title) {
+        return "Senza titolo";
+      } else if (this.project.title.length > 5) {
         return this.project.title.substring(0, 5) + "...";
       } else {
         return this.project.title;
