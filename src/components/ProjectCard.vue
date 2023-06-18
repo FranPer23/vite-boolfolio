@@ -12,17 +12,17 @@ export default {
     };
   },
 
-  computed: {
-    contentPreview() {
-      if (!this.project.title) {
-        return "Senza titolo";
-      } else if (this.project.title.length > 5) {
-        return this.project.title.substring(0, 5) + "...";
-      } else {
-        return this.project.title;
-      }
-    },
-  },
+  //   computed: {
+  //     contentPreview() {
+  //       if (!this.project.title) {
+  //         return "Senza titolo";
+  //       } else if (this.project.title.length > 5) {
+  //         return this.project.title.substring(0, 5) + "...";
+  //       } else {
+  //         return this.project.title;
+  //       }
+  //     },
+  //   },
 };
 </script>
 
@@ -31,6 +31,10 @@ export default {
     <img class="card-img-top" src="" alt="inserire img da db" />
     <div class="card-body">
       <h2 class="card-title">{{ project.title }}</h2>
+      <p>
+        <span v-if="project.type">{{ project.type.name }}</span>
+        <span v-else>n/a</span>
+      </p>
     </div>
   </div>
 </template>
