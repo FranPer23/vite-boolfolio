@@ -1,11 +1,11 @@
 <script>
 import axios from "axios";
-
+import store from "./store";
 import ProjectCard from "./components/ProjectCard.vue";
+
 export default {
   data() {
     return {
-      baseUrl: "http://127.0.0.1:8000",
       projects: [],
     };
   },
@@ -14,7 +14,7 @@ export default {
   },
   methods: {
     getProjects() {
-      axios.get(`${this.baseUrl}/api/projects`).then((resp) => {
+      axios.get(`${store.apiBaseUrl}/api/projects`).then((resp) => {
         this.projects = resp.data.results;
       });
     },

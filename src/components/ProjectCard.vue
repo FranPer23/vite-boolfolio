@@ -1,4 +1,6 @@
 <script>
+import store from "../store";
+
 export default {
   name: "ProjectCard",
   props: {
@@ -6,8 +8,18 @@ export default {
   },
   data() {
     return {
-      baseUrl: "http://127.0.0.1:8000",
+      store,
     };
+  },
+
+  computed: {
+    contentPreview() {
+      if (this.project.title.length > 5) {
+        return this.project.title.substring(0, 5) + "...";
+      } else {
+        return this.project.title;
+      }
+    },
   },
 };
 </script>
