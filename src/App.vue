@@ -17,13 +17,19 @@ export default {
     this.getProjects();
   },
   methods: {
-    getProjects(page = 1) {
-      axios.get(`${store.apiBaseUrl}/api/projects`).then((resp) => {
-        this.projects = resp.data.results.data;
-        this.currentPage = resp.data.results.current_page;
-        this.lastPage = resp.data.results.last_page;
-        this.totalProjects = resp.data.results.total;
-      });
+    getProjects(pageNumber = 1) {
+      axios
+        .get(`${store.apiBaseUrl}/api/projects`, {
+          params: {
+            page: pageNumber,
+          },
+        })
+        .then((resp) => {
+          this.projects = resp.data.results.data;
+          this.currentPage = resp.data.results.current_page;
+          this.lastPage = resp.data.results.last_page;
+          this.totalProjects = resp.data.results.total;
+        });
     },
   },
   components: { ProjectCard },
@@ -46,18 +52,31 @@ export default {
     <nav v-if="lastPage" aria-label="Page navigation example">
       <ul class="pagination">
         <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
+          <a
+            @click.prevent="getProjects(currentPage - 1)"
+            :class="{ disabled: currentPage === 1 }"
+            class="page-link"
+            href="#"
+            aria-label="Previous"
+          >
             <span aria-hidden="true">&laquo;</span>
             <span class="sr-only">Previous</span>
           </a>
         </li>
-        <li class="page-item" v-for="pageNumber in lastPage">
-          <a class="page-link" href="#">{{ pageNumber }}</a>
+        <li class="page-item" v-for="pageNum in lastPage">
+          <a
+            @click.prevent="getProjects(pageNum)"
+            :class="{ active: currentPage === currentPage }"
+            class="page-link"
+            href="#"
+            >{{ pageNum }}</a
+          >
         </li>
 
         <li class="page-item">
           <a
             @click.prevent="getProjects(currentPage + 1)"
+            :class="{ disabled: currentPage === lastPage }"
             class="page-link"
             href="#"
             aria-label="Next"
